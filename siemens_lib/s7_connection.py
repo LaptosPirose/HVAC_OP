@@ -10,14 +10,14 @@ from snap7 import client
 
 class S7Connection:
     def __init__(self, ip, rack, cpu_slot, tcp_port=1102):
-        ''''
+        """
             Constructor function for S7 connection class
             @ip - PLC IP address
             @rack - PLC rack number
             @cpu_slot - PLC CPU slot number
             @tcp_port - tcp port to connection - Not used to perform all ports permitted.
                 Notated just to keep standard connection parameters
-        '''
+        """
         self.__ip = ip
         self.__rack = rack
         self.__cpu_slot = cpu_slot
