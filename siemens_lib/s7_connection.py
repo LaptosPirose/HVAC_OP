@@ -26,14 +26,14 @@ class S7Connection:
                        self.__cpu_slot, self.__tcp_port)
 
     def __connect(self, ip, rack, cpu_slot, tcp_port):
-        '''
-            Performm connection to S7 connection Simenes PLC
+        """
+            Perform connection to S7 connection Siemens PLC
             @ip - PLC IP address
             @rack - PLC rack number
             @cpu_slot - PLC CPU slot number
             @tcp_port - tcp port to connection - Not used to perform all ports permitted.
                 Notated just to keep standard connection parameters
-        '''
+        """
         try:
             self.__connection = client.Client()
             self.__connection.connect(ip, rack, cpu_slot)
