@@ -1,6 +1,5 @@
 from siemens_lib.s7_connection import S7Connection
 
-
 def main(args):
     print(f'Hello world! {args}')
     MEB = S7Connection(ip='192.168.0.55', rack=0, cpu_slot=4)
@@ -17,8 +16,9 @@ def main(args):
     # print(f'Leitura de MB bit 7 {MEB.mb_read(mb = 5, bit = 7, type = 0)}')
 
     print(f'Leitura do byte em binário {MEB.mb_read(mb = 5, type = 1)}')
-    print(f'Leitura do byte em inteiro {MEB.mb_read(mb = 5, type = 2)}')
-    print(f'Leitura do byte em char {MEB.mb_read(mb = 5, type = 3)}')
+
+    # print(f'Leitura do byte em inteiro {MEB.mb_read(mb = 5, type = 2)}')
+    # print(f'Leitura do byte em char {MEB.mb_read(mb = 5, type = 3)}')
 
     print(f'Read MB6 test')
     # print(f'Leitura de MB bit 0 {MEB.mb_read(mb = 6, bit = 0, type = 0)}')
@@ -56,6 +56,13 @@ def main(args):
     print(f'Leitura da word em binário {MEB.mw_read(mw = 5, type = 1)}')
     print(f'Leitura da word em inteiro {MEB.mw_read(mw = 5, type = 2)}')
     print(f'Leitura do byte em char {MEB.mw_read(mw = 5, type = 3)}')
+
+    # Read MD test
+    print(f'Read MD5 test')
+    print(f'Leitura da word em binário {MEB.md_read(md = 5, type = 1)}')
+    print(f'Leitura da word em inteiro {MEB.md_read(md = 5, type = 2)}')
+    print(f'Leitura do byte em char {MEB.md_read(md = 5, type = 3)}')
+
     
 
 if __name__ == '__main__':
