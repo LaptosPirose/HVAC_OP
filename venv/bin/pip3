@@ -1,4 +1,4 @@
-#!/home/angelomoura/Documents/Workspace/Python/HVAC_OP/venv/bin/python3
+#!/home/angelomoura/Documents/Workspace/Python/HVAC_OP/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
