@@ -128,3 +128,66 @@ rectangle_2 = tk.Label(root, text='Rectangle_2', bg='red', fg='white')
 rectangle_2.pack(ipadx=10, ipady=10, side='left')
 
 root.mainloop()
+
+# Frames
+
+import tkinter as tk
+from tkinter import ttk
+
+root = tk.Tk()
+root.geometry("800x600+550+200")
+
+main = ttk.Frame(root)
+main.pack(side='left', fill='both', expand=True)
+
+
+label1 = tk.Label(main, text='Panel Top', bg='red').pack(
+    side='top', expand=True, fill='both')
+label2 = tk.Label(root, text='Panel Top', bg='red').pack(
+    side='top', expand=True, fill='both')
+label3 = tk.Label(main, text='Panel Left', bg='green').pack(
+    side='left', expand=True, fill='both')
+
+
+root.mainloop()
+
+# Two frames
+
+import tkinter as tk
+from tkinter import ttk
+
+root = tk.Tk()
+# root.geometry("800x600+400+200")
+root.geometry("+400+200")
+root.title("Geometry")
+
+
+def print_name():
+    print(f"Hello {user_name.get() or 'No One'}")
+
+
+user_name = tk.StringVar()
+
+label = ttk.Label(root, text="Hello, World!", justify='center')
+label.pack(pady=20)
+
+input_frame = ttk.Frame(root, padding=(20, 10, 20, 0))
+input_frame.pack(fill=tk.BOTH, expand=True)
+
+label1 = tk.Label(input_frame, text="Name: ")
+label1.pack(side='left', padx=(20, 10), pady=(10, 10))
+
+entry_value = ttk.Entry(input_frame, textvariable=user_name, justify='left')
+entry_value.pack(side='left', padx=(10, 20), pady=(10, 10))
+entry_value.focus()
+
+buttons = ttk.Frame(root, padding=(20, 10))
+buttons.pack(fill=tk.BOTH, expand=True)
+
+button_print = ttk.Button(buttons, text='Print', command=print_name)
+button_print.pack(side='left', padx=40, pady=20)
+
+button_destroy = ttk.Button(buttons, text='Quit', command=root.destroy)
+button_destroy.pack(side='left', padx=20, pady=20)
+
+root.mainloop()
