@@ -1,13 +1,19 @@
 import tkinter as tk
 from tkinter import ttk
 
-def greet():
-    print('Hello, World!')
-    
 root = tk.Tk()
-ttk.Label(root, text='Tutorial', padding = (100, 50)).pack()
-# Padding - first value is for distance right and left, second value is for distance up and down
+root.geometry("800x600+550+200")
 
-greet_button = ttk.Button(root, text = 'Greeting', padding = (10,10 ), command = greet).pack()
+main = ttk.Frame(root)
+main.pack(side='left', fill='both', expand=True)
+
+
+label1 = tk.Label(main, text='Panel Top', bg='red').pack(
+    side='top', expand=True, fill='both')
+label2 = tk.Label(root, text='Panel Top', bg='red').pack(
+    side='top', expand=True, fill='both')
+label3 = tk.Label(main, text='Panel Left', bg='green').pack(
+    side='left', expand=True, fill='both')
+
 
 root.mainloop()
