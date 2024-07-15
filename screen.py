@@ -1,19 +1,17 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
-from windows import set_dpi_awarewness
 
-set_dpi_awarewness.set_dpi_awareness()
 
 root = tk.Tk()
-root.geometry("600x480+400+200")
-root.resizable(False, False)
-root.title("Labels")
+root.geometry("600x400")
+root.title('ROOT _//_ Label with Image')
 
-my_label = ttk.Label(root, text='Hello, World!', padding=20)
-my_label.config(font=('Times New Roman', 30))
-# In order to insert images you eill need to install PIllow library
-my_label.pack()
+image_1 = Image.open('./images/example.jpg').resize((300, 150))
+photo_1 = ImageTk.PhotoImage(image_1)
+
+label = ttk.Label(root, image=photo_1)
+label.pack()
 
 
 root.mainloop()

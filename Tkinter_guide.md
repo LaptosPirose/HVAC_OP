@@ -120,7 +120,6 @@ print(root.winfo_geometry)
 root.geometry("800x400+200+200")
 root.title("Geometry")
 
-
 rectangle_1 = tk.Label(root, text='Rectangle_1', bg='green', fg='white')
 rectangle_1.pack(ipadx=10, ipady=10, fill = 'x')
 
@@ -140,14 +139,12 @@ root.geometry("800x600+550+200")
 main = ttk.Frame(root)
 main.pack(side='left', fill='both', expand=True)
 
-
 label1 = tk.Label(main, text='Panel Top', bg='red').pack(
-    side='top', expand=True, fill='both')
+side='top', expand=True, fill='both')
 label2 = tk.Label(root, text='Panel Top', bg='red').pack(
-    side='top', expand=True, fill='both')
+side='top', expand=True, fill='both')
 label3 = tk.Label(main, text='Panel Left', bg='green').pack(
-    side='left', expand=True, fill='both')
-
+side='left', expand=True, fill='both')
 
 root.mainloop()
 
@@ -157,14 +154,14 @@ import tkinter as tk
 from tkinter import ttk
 
 root = tk.Tk()
+
 # root.geometry("800x600+400+200")
+
 root.geometry("+400+200")
 root.title("Geometry")
 
-
 def print_name():
-    print(f"Hello {user_name.get() or 'No One'}")
-
+print(f"Hello {user_name.get() or 'No One'}")
 
 user_name = tk.StringVar()
 
@@ -198,15 +195,15 @@ import tkinter as tk
 from tkinter import ttk
 
 root = tk.Tk()
+
 # root.geometry("800x600+400+200")
+
 root.geometry("+400+200")
 root.title("Greeting")
 root.columnconfigure(0, weight=1)
 
-
 def print_name():
-    print(f"Hello {user_name.get() or 'No One'}")
-
+print(f"Hello {user_name.get() or 'No One'}")
 
 user_name = tk.StringVar()
 
@@ -220,7 +217,7 @@ label1 = tk.Label(input_frame, text="Name: ")
 label1.grid(row=0, column=0)
 
 entry_value = ttk.Entry(input_frame, width=25,
-                        textvariable=user_name, justify='left')
+textvariable=user_name, justify='left')
 entry_value.grid(row=0, column=1)
 entry_value.focus()
 
@@ -243,10 +240,8 @@ from tkinter import ttk
 import time
 import datetime
 
-
 def print_message():
-    print(user_name.get() or 'No One!')
-
+print(user_name.get() or 'No One!')
 
 root = tk.Tk()
 
@@ -255,7 +250,6 @@ user_name = tk.StringVar()
 time_now = datetime.datetime.now()
 str_date = time_now.strftime('%Y/%m/%d')
 str_time = time_now.strftime('%H:%m:%S')
-
 
 root.geometry("1080x600+450+100")
 root.title("My First APP")
@@ -279,4 +273,67 @@ button_2.grid(row=1, column=1)
 
 root.mainloop()
 
-# Label
+# Label with images
+
+## Changing images
+
+import tkinter as tk
+from tkinter import ttk
+from PIL import Image, ImageTk
+from windows import set_dpi_awarewness
+
+set_dpi_awarewness.set_dpi_awareness()
+
+root = tk.Tk()
+root.geometry("600x480+400+200")
+root.resizable(True, False)
+root.title("Labels")
+
+my_label = ttk.Label(root, text='Hello, World!', padding=20)
+my_label.config(font=('Times New Roman', 30))
+my_label.pack(expand=True)
+
+# In order to insert images you eill need to install PIllow library
+
+# image = Image.open('./images/example.jpg')
+
+# or
+
+# with open('./images/example.jpg', 'r') as img:
+
+# image = Image.open(img)
+
+photo*T* = False
+
+def change*image():
+global photo_T*
+label['image'] = photo_b
+
+    if not (photo_T_):
+        photo_T_ = not photo_T_
+        return None
+    if photo_T_:
+        label['image'] = photo_a
+        photo_T_ = not photo_T_
+        return None
+
+
+image_a = Image.open('./images/example.jpg').resize((200, 100)) # Resize image
+photo_a = ImageTk.PhotoImage(image_a)
+
+image_b = Image.open('./images/jpg.png').resize((100, 100))
+photo_b = ImageTk.PhotoImage(image_b)
+
+label = ttk.Label(root, image=photo_a, padding=5)
+label.pack(fill='both', expand=True)
+label.pack()
+
+button_change_image = ttk.Button(
+root, text="Change Image", command=change_image)
+button_change_image.pack()
+
+# To change image
+
+# label['image']=photo_b
+
+root.mainloop()
