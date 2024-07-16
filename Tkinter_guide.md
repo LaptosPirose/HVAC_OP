@@ -379,10 +379,8 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 
-
 def change_name():
-    text_name.set("Hello Angelo")
-
+text_name.set("Hello Angelo")
 
 root = tk.Tk()
 root.geometry("800x450+300+100")
@@ -392,14 +390,13 @@ image = Image.open('./images/example.jpg')
 photo = ImageTk.PhotoImage(image)
 
 label = ttk.Label(root, padding=10, image=photo,
-                  text="Label Text", compound='bottom').pack()
+text="Label Text", compound='bottom').pack()
 text_name = tk.StringVar()
-
 
 text_name.set("Hello World!")
 
 label_name = ttk.Label(root, textvariable=text_name,
-                       font=("Arial", 20), wraplength=200).pack()
+font=("Arial", 20), wraplength=200).pack()
 
 button = ttk.Button(root, text='change name', command=change_name).pack()
 
@@ -407,6 +404,109 @@ root.mainloop()
 
 # Rapid lambda function
 
-
 def valor(x, y): return x + y
 print(valor(5, 3))
+
+# Tekinter Text
+
+# Text insert
+
+import tkinter as tk
+from tkinter import ttk
+from PIL import Image, ImageTk
+
+root = tk.Tk()
+
+window_width = 1200
+window_height = 400
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+
+print(screen_width)
+print(screen_height)
+
+window_pos_x = int((screen_width/2) - (window_width/2))
+window_pos_y = int((screen_height/2) - (window_height/2))
+
+root.geometry(str(window_width)+'x'+str(window_height) +
+'+'+str(window_pos_x)+'+'+str(window_pos_y))
+root.resizable(False, False)
+
+root.title('Text Insert')
+
+text = tk.Text(root, height=8)
+text.pack(pady=(20, 0))
+text.focus()
+
+# Line 1 char zero (1.0) and firt comment inside
+
+text.insert("1.0", "Enter the thext here...")
+text['state'] = 'normal' # disable- status to be able put a text or not
+
+# get the text content from line 1 char 5 till the end
+
+text_content = text.get("1.5", "end")
+print(text_content)
+
+root.mainloop()
+
+# Text with scrollbar
+
+# Text insert
+
+import tkinter as tk
+from tkinter import ttk
+from PIL import Image, ImageTk
+
+root = tk.Tk()
+
+window_width = 1200
+window_height = 400
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+
+print(screen_width)
+print(screen_height)
+
+window_pos_x = int((screen_width/2) - (window_width/2))
+window_pos_y = int((screen_height/2) - (window_height/2))
+
+root.geometry(str(window_width)+'x'+str(window_height) +
+'+'+str(window_pos_x)+'+'+str(window_pos_y))
+root.resizable(False, False)
+
+root.title('Text Insert')
+
+text = tk.Text(root, height=8)
+text.grid(row=0, column=0, pady=(20, 0), padx=(20, 0), sticky='EW')
+text.focus()
+
+# Line 1 char zero (1.0) and firt comment inside
+
+text.insert("1.0", "Enter the thext here...")
+text['state'] = 'normal' # disable- status to be able put a text or not
+
+# get the text content from line 1 char 5 till the end
+
+text_content = text.get("1.0", "end")
+print(text_content)
+
+text_scroll = tk.Scrollbar(root, orient='vertical', command=text.yview)
+text_scroll.grid(row=0, column=1, pady=(20, 0), padx=(0, 20), sticky='ns')
+text["yscrollcommand"] = text_scroll.set
+
+root.mainloop()
+
+# Horizontal separators
+
+import tkinter as tk
+from tkinter import ttk
+
+root = tk.Tk()
+root.geometry("800x450+200+100")
+ttk.Label(root, text="Hello, world!").pack()
+
+ttk.Separator(root, orient='horizontal').pack(fill='x')
+
+ttk.Label(root, text="Hello, world!").pack()
+root.mainloop()
