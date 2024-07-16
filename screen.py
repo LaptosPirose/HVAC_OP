@@ -5,41 +5,29 @@ from windows import set_dpi_awarewness
 
 set_dpi_awarewness.set_dpi_awareness()
 
+
 root = tk.Tk()
-root.geometry("800x450+400+200")
-root.title("List Box")
 
+window_width = 800
+window_height = 400
 
-initial_value = tk.IntVar(value=20)
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
 
-spin_box = tk.Spinbox(
+window_pos_x = int((screen_width/2) - (window_width/2))
+window_pos_y = int((screen_height/2) - (window_height/2))
+
+root.geometry(str(window_width)+'x'+str(window_height) +
+              '+'+str(window_pos_x)+'+'+str(window_pos_y))
+
+root.resizable(False, False)
+
+root.title("Distance Converter")
+
+main = ttk.Frame(
     root,
-    from_=0,
-    to=100,
-    width=5,
-    textvariable=initial_value,
-    wrap=False,
-    command=lambda: print("Spinbox value:", initial_value.get())
-).pack()
-
-spin_box = ttk.Spinbox(
-    root,
-    from_=0,
-    to=100,
-    width=5,
-    textvariable=initial_value,
-    wrap=True,
-    command=lambda: print("Spinbox value:", initial_value.get())
-).pack()
-
-spin_box = ttk.Spinbox(
-    root,
-    values=(0, 10, 20, 30, 40, 50, 60),
-    width=5,
-    textvariable=initial_value,
-    wrap=True,
-    command=lambda: print("Spinbox value:", initial_value.get())
-).pack()
+    padding=(30, 15)
+)
 
 
 root.mainloop()

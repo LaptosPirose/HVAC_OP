@@ -676,40 +676,37 @@ root = tk.Tk()
 root.geometry("800x450+400+200")
 root.title("List Box")
 
-
 programming_languages = ("C", "C++", "Java", "JavaScript", "R", "Python")
 
 langs = tk.StringVar(value=programming_languages)
 
 list_box = tk.Listbox(
-    root,
-    listvariable=langs,
-    selectmode=tk.MULTIPLE,
-    height=6,
-    width=20
+root,
+listvariable=langs,
+selectmode=tk.MULTIPLE,
+height=6,
+width=20
 )
 list_box.pack()
 list_box = tk.Listbox(
-    root,
-    listvariable=langs,
-    height=6,
-    width=20
+root,
+listvariable=langs,
+height=6,
+width=20
 )
 list_box["selectmode"] = tk.BROWSE
 list_box.pack()
 
 # No curso é falado sobre os valors para select mode como 'extended' e 'browse',
+
 # mas não funcionou. Apenas usando tk.MULTIPLE para multiplos elementos e tk.BROWSE para único
 
-
 def handle_selection_change(event):
-    selected_indices = list_box.curselection()
-    for i in selected_indices:
-        print(list_box.get(i))
-
+selected_indices = list_box.curselection()
+for i in selected_indices:
+print(list_box.get(i))
 
 list_box.bind("<<ListboxSelect>>", handle_selection_change)
-
 
 root.mainloop()
 
@@ -724,40 +721,97 @@ set_dpi_awarewness.set_dpi_awareness()
 
 root = tk.Tk()
 root.geometry("800x450+400+200")
-root.title("List Box")
-
+root.title("Spin Boxes")
 
 initial_value = tk.IntVar(value=20)
 
-spin_box = tk.Spinbox(
-    root,
-    from_=0,
-    to=100,
-    width=5,
-    textvariable=initial_value,
-    wrap=False,
-    command=lambda: print("Spinbox value:", initial_value.get())
+spin*box = tk.Spinbox(
+root,
+from*=0,
+to=100,
+width=5,
+textvariable=initial_value,
+wrap=False,
+command=lambda: print("Spinbox value:", initial_value.get())
+).pack()
+
+spin*box = ttk.Spinbox(
+root,
+from*=0,
+to=100,
+width=5,
+textvariable=initial_value,
+wrap=True,
+command=lambda: print("Spinbox value:", initial_value.get())
 ).pack()
 
 spin_box = ttk.Spinbox(
-    root,
-    from_=0,
-    to=100,
-    width=5,
-    textvariable=initial_value,
-    wrap=True,
-    command=lambda: print("Spinbox value:", initial_value.get())
+root,
+values=(0, 10, 20, 30, 40, 50, 60),
+width=5,
+textvariable=initial_value,
+wrap=True,
+command=lambda: print("Spinbox value:", initial_value.get())
 ).pack()
-
-spin_box = ttk.Spinbox(
-    root,
-    values=(0, 10, 20, 30, 40, 50, 60),
-    width=5,
-    textvariable=initial_value,
-    wrap=True,
-    command=lambda: print("Spinbox value:", initial_value.get())
-).pack()
-
 
 root.mainloop()
+
+# Cálculo centralizar janela na tela
+
+window_width = 1200
+window_height = 400
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+
+print(screen_width)
+print(screen_height)
+
+window_pos_x = int((screen_width/2) - (window_width/2))
+window_pos_y = int((screen_height/2) - (window_height/2))
+
+root.geometry(str(window_width)+'x'+str(window_height) +
+'+'+str(window_pos_x)+'+'+str(window_pos_y))
+root.resizable(False, False)
+
+# Scales
+
+import tkinter as tk
+from tkinter import ttk
+
+from windows import set_dpi_awarewness
+
+set_dpi_awarewness.set_dpi_awareness()
+
+root = tk.Tk()
+root.geometry("800x450+400+200")
+root.title("Scale")
+
+scale = ttk.Scale(
+    root,
+    orient='horizontal',
+    from_=0,
+    to=100,
+    state='normal', #disabled
+    command=lambda x: print("Scale value with lambda function:", x)
+).pack(fill='x', padx=(20,20), pady=(20,20))
+
+
+def handle_scale_change(event):
+    print(f'Scale value with regular function: {current_value.get()}')
+
+current_value = tk.DoubleVar()    
+scale = ttk.Scale(
+    root,
+    orient='horizontal',
+    from_=0,
+    to=100,
+    state='normal', #disabled
+    variable=current_value,
+    command=handle_scale_change
+    ).pack(fill='x', padx=(20,20), pady=(20,20))
+root.mainloop()
+
+
+# Application Distance Converter
+
 
