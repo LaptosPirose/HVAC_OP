@@ -526,7 +526,7 @@ root.title("Checkbox")
 
 checkbutton = ttk.Checkbutton(root, text="Check me")
 checkbutton.pack()
-checkbutton['state'] = 'disabled'  # Or normal if you want to turn able or not
+checkbutton['state'] = 'disabled' # Or normal if you want to turn able or not
 
 root.mainloop()
 
@@ -545,32 +545,219 @@ root.title("Checkbox")
 
 selected_option = tk.StringVar()
 
-
 def print_current_option():
-    print(selected_option.get())
-
+print(selected_option.get())
 
 checkbutton = ttk.Checkbutton(
-    root,
-    text="Check me",
-    variable=selected_option,
-    onvalue='On',
-    offvalue='Off',
-    command=print_current_option
-  )
-
+root,
+text="Check me",
+variable=selected_option,
+onvalue='On',
+offvalue='Off',
+command=print_current_option
+)
 
 checkbutton.pack()
+
 # Normal or disabled if you want to turn able or not
+
 checkbutton['state'] = 'normal'
 
 root.mainloop()
 
 # Radio Button
 
-option_one = ttk.Radiobutton(
-    root,
-    text='Option1',
-    variable=storage_variable,
-    value='First Option'
+import tkinter as tk
+from tkinter import ttk
+
+from windows import set_dpi_awarewness
+
+set_dpi_awarewness.set_dpi_awareness()
+
+root = tk.Tk()
+root.geometry("800x450+400+200")
+root.title("Radio Button")
+
+option_selected = tk.StringVar()
+
+option1 = ttk.Radiobutton(
+root,
+text="Option 1",
+variable=option_selected,
+value="Option 1"
 )
+
+option2 = ttk.Radiobutton(
+root,
+text="Option 2",
+variable=option_selected,
+value="Option 2"
+)
+
+option3 = ttk.Radiobutton(
+root,
+text="Option 3",
+variable=option_selected,
+value="Option 3"
+)
+
+option1.grid(row=0, column=0)
+option2.grid(row=0, column=1)
+option3.grid(row=0, column=2)
+
+ttk.Label(
+root,
+textvariable=option_selected,
+font=("Arial", 16),
+anchor=tk.W
+).grid(row=1, columnspan=1)
+
+root.mainloop()
+
+# Combo box
+
+import tkinter as tk
+from tkinter import ttk
+
+from windows import set_dpi_awarewness
+
+set_dpi_awarewness.set_dpi_awareness()
+
+root = tk.Tk()
+root.geometry("800x450+400+200")
+root.title("Combo Box")
+
+selected_weekday = tk.StringVar()
+selected_weekday_1 = tk.StringVar()
+
+weekday = ttk.Combobox(
+root,
+textvariable=selected_weekday,
+values=["Segunda", "Terça", "Quarta",
+"Quinta", "Sexta", "Sábado", "Domingo"], # Impede que o usuário digite um valor qualquer - se puder digitar, selecione 'normal'
+state='readonly'
+)
+weekday.grid(column=0, row=0, pady=(10, 0), padx=(10, 10))
+
+# Os parâmetros de uma widget podem ser passados dentro do widget ou separados
+
+weekday_1 = ttk.Combobox(
+root,
+textvariable=selected_weekday_1,
+)
+weekday_1['values'] = ("Segunda", "Terça", "Quarta",
+"Sexta", "Sábado", "Domingo")
+weekday_1['state'] = 'readonly'
+weekday_1.grid(column=0, row=1, pady=(10, 0), padx=(10, 10))
+
+# Force valores do combobox
+
+def handle_slection(event):
+print(f'Today is {selected_weekday.get()}.')
+print(f'O primeiro valor clicado foi de {weekday.current()}.')
+print(f'But we\'re gonna change it to Sexta')
+selected_weekday.set('Sexta')
+print(f'Agora hoje é {weekday.get()}.')
+print(f'O valor atual clicado é de {weekday.current()}')
+
+weekday.bind("<<ComboboxSelected>>", handle_slection)
+root.mainloop()
+
+# List Box
+
+import tkinter as tk
+from tkinter import ttk
+
+from windows import set_dpi_awarewness
+
+set_dpi_awarewness.set_dpi_awareness()
+
+root = tk.Tk()
+root.geometry("800x450+400+200")
+root.title("List Box")
+
+
+programming_languages = ("C", "C++", "Java", "JavaScript", "R", "Python")
+
+langs = tk.StringVar(value=programming_languages)
+
+list_box = tk.Listbox(
+    root,
+    listvariable=langs,
+    selectmode=tk.MULTIPLE,
+    height=6,
+    width=20
+)
+list_box.pack()
+list_box = tk.Listbox(
+    root,
+    listvariable=langs,
+    height=6,
+    width=20
+)
+list_box["selectmode"] = tk.BROWSE
+list_box.pack()
+
+# No curso é falado sobre os valors para select mode como 'extended' e 'browse',
+# mas não funcionou. Apenas usando tk.MULTIPLE para multiplos elementos e tk.BROWSE para único
+
+
+def handle_selection_change(event):
+    selected_indices = list_box.curselection()
+    for i in selected_indices:
+        print(list_box.get(i))
+
+
+list_box.bind("<<ListboxSelect>>", handle_selection_change)
+
+
+root.mainloop()
+
+# Spin Boxes
+
+import tkinter as tk
+from tkinter import ttk
+
+from windows import set_dpi_awarewness
+
+set_dpi_awarewness.set_dpi_awareness()
+
+root = tk.Tk()
+root.geometry("800x450+400+200")
+root.title("List Box")
+
+
+initial_value = tk.IntVar(value=20)
+
+spin_box = tk.Spinbox(
+    root,
+    from_=0,
+    to=100,
+    width=5,
+    textvariable=initial_value,
+    wrap=False,
+    command=lambda: print("Spinbox value:", initial_value.get())
+).pack()
+
+spin_box = ttk.Spinbox(
+    root,
+    from_=0,
+    to=100,
+    width=5,
+    textvariable=initial_value,
+    wrap=True,
+    command=lambda: print("Spinbox value:", initial_value.get())
+).pack()
+
+spin_box = ttk.Spinbox(
+    root,
+    values=(0, 10, 20, 30, 40, 50, 60),
+    width=5,
+    textvariable=initial_value,
+    wrap=True,
+    command=lambda: print("Spinbox value:", initial_value.get())
+).pack()
+
+
+root.mainloop()
+
