@@ -510,3 +510,67 @@ ttk.Separator(root, orient='horizontal').pack(fill='x')
 
 ttk.Label(root, text="Hello, world!").pack()
 root.mainloop()
+
+#Check Buttons
+
+import tkinter as tk
+from tkinter import ttk
+
+from windows import set_dpi_awarewness
+
+set_dpi_awarewness.set_dpi_awareness()
+
+root = tk.Tk()
+root.geometry("800x450+400+200")
+root.title("Checkbox")
+
+checkbutton = ttk.Checkbutton(root, text="Check me")
+checkbutton.pack()
+checkbutton['state'] = 'disabled'  # Or normal if you want to turn able or not
+
+root.mainloop()
+
+# Checkbutton associated with variable
+
+import tkinter as tk
+from tkinter import ttk
+
+from windows import set_dpi_awarewness
+
+set_dpi_awarewness.set_dpi_awareness()
+
+root = tk.Tk()
+root.geometry("800x450+400+200")
+root.title("Checkbox")
+
+selected_option = tk.StringVar()
+
+
+def print_current_option():
+    print(selected_option.get())
+
+
+checkbutton = ttk.Checkbutton(
+    root,
+    text="Check me",
+    variable=selected_option,
+    onvalue='On',
+    offvalue='Off',
+    command=print_current_option
+  )
+
+
+checkbutton.pack()
+# Normal or disabled if you want to turn able or not
+checkbutton['state'] = 'normal'
+
+root.mainloop()
+
+# Radio Button
+
+option_one = ttk.Radiobutton(
+    root,
+    text='Option1',
+    variable=storage_variable,
+    value='First Option'
+)
