@@ -317,7 +317,6 @@ label['image'] = photo_b
         photo_T_ = not photo_T_
         return None
 
-
 image_a = Image.open('./images/example.jpg').resize((200, 100)) # Resize image
 photo_a = ImageTk.PhotoImage(image_a)
 
@@ -344,6 +343,23 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 
+root = tk.Tk()
+root.geometry("600x400")
+root.title('ROOT _//_ Label with Image')
+
+image_1 = Image.open('./images/example.jpg').resize((300, 150))
+photo_1 = ImageTk.PhotoImage(image_1)
+
+label = ttk.Label(root, image=photo_1)
+label.pack()
+
+root.mainloop()
+
+# Another example
+
+import tkinter as tk
+from tkinter import ttk
+from PIL import Image, ImageTk
 
 root = tk.Tk()
 root.geometry("600x400")
@@ -355,5 +371,42 @@ photo_1 = ImageTk.PhotoImage(image_1)
 label = ttk.Label(root, image=photo_1)
 label.pack()
 
+root.mainloop()
+
+# Change StringVar values and put images and texts with copound
+
+import tkinter as tk
+from tkinter import ttk
+from PIL import Image, ImageTk
+
+
+def change_name():
+    text_name.set("Hello Angelo")
+
+
+root = tk.Tk()
+root.geometry("800x450+300+100")
+root.title("PLC Monitor")
+
+image = Image.open('./images/example.jpg')
+photo = ImageTk.PhotoImage(image)
+
+label = ttk.Label(root, padding=10, image=photo,
+                  text="Label Text", compound='bottom').pack()
+text_name = tk.StringVar()
+
+
+text_name.set("Hello World!")
+
+label_name = ttk.Label(root, textvariable=text_name,
+                       font=("Arial", 20), wraplength=200).pack()
+
+button = ttk.Button(root, text='change name', command=change_name).pack()
 
 root.mainloop()
+
+# Rapid lambda function
+
+
+def valor(x, y): return x + y
+print(valor(5, 3))
