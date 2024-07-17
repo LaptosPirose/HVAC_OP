@@ -29,5 +29,4 @@ main = ttk.Frame(
     padding=(30, 15)
 )
 
-
 root.mainloop()
