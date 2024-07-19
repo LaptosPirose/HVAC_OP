@@ -31,11 +31,11 @@ class DistanceConverter(tk.Tk):
 
         self.geometry(self.width+'x'+self.height+'+'+self.x_pos+'+'+self.y_pos)
 
-        self.frame = MetersToFeet(self)
+        self.frame = FeetsToMeter(self)
         self.frame.grid()
 
-        self.bind('<Return>', self.frame.calculate_feet)
-        self.bind('<KP_Enter>', self.frame.calculate_feet)
+        self.bind('<Return>', self.frame.calculate)
+        self.bind('<KP_Enter>', self.frame.calculate)
 
 
 class MetersToFeet(ttk.Frame):
@@ -55,7 +55,7 @@ class MetersToFeet(ttk.Frame):
         self.feet_label = ttk.Label(master=self, text='Feet:')
         self.feet_display = ttk.Label(master=self, text='Feet from here')
         self.calc_button = ttk.Button(
-            master=self, text='Calculate', command=self.calculate_feet)
+            master=self, text='Calculate', command=self.calculate)
 
         self.meter_label.grid(row=0, column=0, sticky='W')
         self.meter_input.grid(row=0, column=1, sticky='EW')
@@ -69,7 +69,7 @@ class MetersToFeet(ttk.Frame):
         for self.child in self.winfo_children():
             self.child.grid_configure(padx=5, pady=5)
 
-    def calculate_feet(self, *args):
+    def calculate(self, *args):
 
         try:
             self.meters = float(self.meters_value.get())
@@ -81,47 +81,48 @@ class MetersToFeet(ttk.Frame):
             self.feet_display.config(text='Invalid input')
         return
     
-class MetersToFeet(ttk.Frame):
+class FeetsToMeter(ttk.Frame):
 
     def __init__(self, container, **kwargs):
         super().__init__(container, **kwargs)
         self['padding'] = (30, 30)
 
-        self.meters_value = tk.StringVar()
         self.feet_value = tk.StringVar()
+        self.meters_value = tk.StringVar()
 
-        self.meter_label = ttk.Label(master=self, text='Meters:')
-        self.meter_input = ttk.Entry(master=self, width=10,
-                                     textvariable=self.meters_value)
-        self.meter_input.config(font=('Segoe UI', 10))
+        self.feet_label = ttk.Label(master=self, text='Feets:')
+        self.feet_input = ttk.Entry(master=self, width=10,
+                                     textvariable=self.feet_value)
+        self.feet_input.config(font=('Segoe UI', 10))
 
-        self.feet_label = ttk.Label(master=self, text='Feet:')
-        self.feet_display = ttk.Label(master=self, text='Feet from here')
+        self.meters_label = ttk.Label(master=self, text='Meters:')
+        self.meters_display = ttk.Label(master=self, text='Meters from here')
+        
         self.calc_button = ttk.Button(
-            master=self, text='Calculate', command=self.calculate_feet)
+            master=self, text='Calculate', command=self.calculate)
 
-        self.meter_label.grid(row=0, column=0, sticky='W')
-        self.meter_input.grid(row=0, column=1, sticky='EW')
-        self.meter_input.focus()
+        self.feet_label.grid(row=0, column=0, sticky='W')
+        self.feet_input.grid(row=0, column=1, sticky='EW')
+        self.feet_input.focus()
 
-        self.feet_label.grid(row=1, column=0, sticky='W')
-        self.feet_display.grid(row=1, column=1, sticky='EW')
+        self.meters_label.grid(row=1, column=0, sticky='W')
+        self.meters_display.grid(row=1, column=1, sticky='EW')
 
         self.calc_button.grid(row=2, column=0, columnspan=2, sticky='EW')
 
         for self.child in self.winfo_children():
             self.child.grid_configure(padx=5, pady=5)
 
-    def calculate_feet(self, *args):
+    def calculate(self, *args):
 
         try:
-            self.meters = float(self.meters_value.get())
-            self.feet = self.meters * 3.28084
-            print(f'{self.meters} meters is equal to {self.feet:.3f} feet.')
-            self.feet_value.set(f'{self.feet:.3f}')
-            self.feet_display.config(text=f'{self.feet_value.get()}')
+            self.feet = float(self.feet_value.get())
+            self.meters = self.feet / 3.28084
+            print(f'{self.feet} feet is equal to {self.meters:.3f} meters.')
+            self.meters_value.set(f'{self.meters:.3f}')
+            self.meters_display.config(text=f'{self.meters_value.get()}')
         except ValueError:
-            self.feet_display.config(text='Invalid input')
+            self.meters_display.config(text='Invalid input')
         return
 
 
