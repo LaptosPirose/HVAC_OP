@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.ttk
 
+print('Entering the style module!')
 root = tk.Tk()
 root.geometry("800x200+200+200")
 
