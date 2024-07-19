@@ -2,77 +2,87 @@ import tkinter as tk
 from tkinter import ttk
 import tkinter.font as font
 
-from windows import set_dpi_awarewness
+import sys
+import os
+
+path = os.path.abspath(os.curdir) + '/windows'
+print(path)
+
+import set_dpi_awarewness # type: ignore
+
+
+print(os.path.abspath(os.curdir))
+
 
 set_dpi_awarewness.set_dpi_awareness()
 
 
-root = tk.Tk()
+class DistanceConverter(tk.Tk):
 
-window_width = 800
-window_height = 400
+    def __init__(self, width, height, x_pos, y_pos, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-screen_width = root.winfo_screenwidth()
-screen_height = root.winfo_screenheight()
+        self.title('Distance Converter')
 
-window_pos_x = int((screen_width/2) - (window_width/2))
-window_pos_y = int((screen_height/2) - (window_height/2))
+        self.width = str(width)
+        self.height = str(height)
+        self.x_pos = str(x_pos)
+        self.y_pos = str(y_pos)
 
-root.geometry(str(window_width)+'x'+str(window_height) +
-              '+'+str(window_pos_x)+'+'+str(window_pos_y))
+        self.geometry(self.width+'x'+self.height+'+'+self.x_pos+'+'+self.y_pos)
 
-root.resizable(True, True)
-root.columnconfigure(0, weight=1)
+        self.frame = AppFrame(self)
+        self.frame.grid()
 
-root.title("Distance Converter")
-
-font.nametofont("TkDefaultFont").configure(size=10)
-
-meters_value = tk.StringVar()
-feet_value = tk.StringVar()
+        self.bind('<Return>', self.frame.calculate_feet)
+        self.bind('<KP_Enter>', self.frame.calculate_feet)
 
 
-def calculate_feet(*args):
-    try:
-        pass
-        meters = float(meters_value.get())
-        feet = meters * 3.28084
-        print(f'{meters} meters is equal to {feet:.3f} feet.')
-        feet_value.set(f'{feet:.3f}')
-        feet_display.config(text=f'{feet_value.get()}')
-    except ValueError:
-        feet_display.config(text='Invalid input')
+class AppFrame(ttk.Frame):
+
+    def __init__(self, container, **kwargs):
+        super().__init__(container, **kwargs)
+        self['padding'] = (30, 30)
+
+        self.meters_value = tk.StringVar()
+        self.feet_value = tk.StringVar()
+
+        self.meter_label = ttk.Label(master=self, text='Meters:')
+        self.meter_input = ttk.Entry(master=self, width=10,
+                                     textvariable=self.meters_value)
+        self.meter_input.config(font=('Segoe UI', 10))
+
+        self.feet_label = ttk.Label(master=self, text='Feet:')
+        self.feet_display = ttk.Label(master=self, text='Feet from here')
+        self.calc_button = ttk.Button(
+            master=self, text='Calculate', command=self.calculate_feet)
+
+        self.meter_label.grid(row=0, column=0, sticky='W')
+        self.meter_input.grid(row=0, column=1, sticky='EW')
+        self.meter_input.focus()
+
+        self.feet_label.grid(row=1, column=0, sticky='W')
+        self.feet_display.grid(row=1, column=1, sticky='EW')
+
+        self.calc_button.grid(row=2, column=0, columnspan=2, sticky='EW')
+
+        for self.child in self.winfo_children():
+            self.child.grid_configure(padx=5, pady=5)
+
+    def calculate_feet(self, *args):
+
+        try:
+            self.meters = float(self.meters_value.get())
+            self.feet = self.meters * 3.28084
+            print(f'{self.meters} meters is equal to {self.feet:.3f} feet.')
+            self.feet_value.set(f'{self.feet:.3f}')
+            self.feet_display.config(text=f'{self.feet_value.get()}')
+        except ValueError:
+            self.feet_display.config(text='Invalid input')
         return
 
 
-main = ttk.Frame(
-    root,
-    padding=(30, 15)
-)
-main.grid()
-
-meter_label = ttk.Label(master=main, text='Meters:')
-meter_input = ttk.Entry(master=main, width=10,
-                        textvariable=meters_value)
-meter_input.config(font=('Segoe UI', 10))
-
-feet_label = ttk.Label(master=main, text='Feet:')
-feet_display = ttk.Label(master=main, text='Feet from here')
-calc_button = ttk.Button(master=main, text='Calculate', command=calculate_feet)
-
-meter_label.grid(row=0, column=0, sticky='W')
-meter_input.grid(row=0, column=1, sticky='EW')
-meter_input.focus()
-
-feet_label.grid(row=1, column=0, sticky='W')
-feet_display.grid(row=1, column=1, sticky='EW')
-
-calc_button.grid(row=2, column=0, columnspan=2, sticky='EW')
-
-root.bind('<Return>', calculate_feet)
-root.bind('<KP_Enter>', calculate_feet)
-
-for child in main.winfo_children():
-    child.grid_configure(padx=10, pady=10)
-
+root = DistanceConverter(width=600, height=350, x_pos=550, y_pos=200)
+font.nametofont("TkDefaultFont").configure(size=10)
+root.columnconfigure(index=0, weight=1)
 root.mainloop()
