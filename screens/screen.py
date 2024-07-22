@@ -50,7 +50,7 @@ class DistanceConverter(tk.Tk):
             sticky='NSEW'
         )
 
-        self.frame_feets_to_meters = FeetsToMeter(
+        self.frame_feets_to_meters = FeetsToMeters(
             self.container,
             self
         )
@@ -61,7 +61,7 @@ class DistanceConverter(tk.Tk):
             sticky='NSEW'
         )
 
-        self.frame_meters_to_feets = MetersToFeet(
+        self.frame_meters_to_feets = MetersToFeets(
             self.container,
             self
         )
@@ -72,10 +72,14 @@ class DistanceConverter(tk.Tk):
             sticky='NSEW'
         )
 
-        self.frames[FeetsToMeter] = self.frame_feets_to_meters
-        self.frames[MetersToFeet] = self.frame_meters_to_feets
+        self.frames[FeetsToMeters] = self.frame_feets_to_meters
+        self.frames[MetersToFeets] = self.frame_meters_to_feets
 
-        self.switch_frame(MetersToFeet)
+        actual_frame = self.switch_frame(MetersToFeets)
+
+        print(
+            actual_frame
+        )
 
         self.bind('<Return>', self.frame_feets_to_meters.calculate)
         self.bind('<KP_Enter>', self.frame_feets_to_meters.calculate)
@@ -89,9 +93,10 @@ class DistanceConverter(tk.Tk):
         self.frame_class = frame_class
         self.frame = self.frames[self.frame_class]
         self.frame.tkraise()
+        return frame_class
 
 
-class MetersToFeet(ttk.Frame):
+class MetersToFeets(ttk.Frame):
 
     def __init__(
         self,
@@ -136,7 +141,7 @@ class MetersToFeet(ttk.Frame):
         self.switch_button = ttk.Button(
             master=self,
             text='Switch to feets',
-            command=lambda: controller.switch_frame(FeetsToMeter)
+            command=lambda: controller.switch_frame(FeetsToMeters)
         )
 
         self.meter_label.grid(
@@ -186,7 +191,7 @@ class MetersToFeet(ttk.Frame):
         return
 
 
-class FeetsToMeter(ttk.Frame):
+class FeetsToMeters(ttk.Frame):
 
     def __init__(
             self,
@@ -232,7 +237,7 @@ class FeetsToMeter(ttk.Frame):
         self.switch_button = ttk.Button(
             master=self,
             text='Switch to meters',
-            command=lambda: controller.switch_frame(MetersToFeet)
+            command=lambda: controller.switch_frame(MetersToFeets)
         )
 
         self.feet_label.grid(
