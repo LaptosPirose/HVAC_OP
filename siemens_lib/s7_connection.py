@@ -7,6 +7,7 @@ from snap7 import client
     julho 2024
 '''
 
+
 class S7Connection:
     def __init__(self, ip, rack, cpu_slot, tcp_port=1102):
         """
@@ -181,3 +182,14 @@ class S7Connection:
                 self.__char_third + self.__char_last
 
         return self.__dword
+
+    def db_read_string(self, db_number, start_pos=0, qty_bytes=1):
+        '''
+            Perform return getter from MB. The value returned is a prashe
+        '''
+        self.__raw_value_string = str(self.__connection.db_read(db_number, start_pos, qty_bytes))
+        self.__ignored_chars = 12
+
+        self.__string = self.__raw_value_string[self.__ignored_chars:self.__ignored_chars+qty_bytes]
+
+        return self.__string
