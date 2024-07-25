@@ -79,6 +79,10 @@ class S7Connection:
                 1 = Return byte binary representation (consider as string)
                 2 = Return byte decimal representation (consider as int)
                 3 = Return char representation (consider string)
+
+                @mb - memory byte number
+                @bit - bit number to read (consider 0-based)
+                @type - type of return value (consider 1-based)
         '''
         self.__BYTE_LEN = 8
         self.__raw_value_byte = int.from_bytes(self.__connection.mb_read(
@@ -110,6 +114,10 @@ class S7Connection:
                 1 = Return word binary representation (consider as string)
                 2 = Return word decimal representation (consider as int)
                 3 = Return char representation (consider string)
+
+                @mw - memory word number
+                @bit - bit number to read (consider 0-based)
+                @type - type of return value (consider 1-based)
         '''
         self.__WORD_LEN = 16
         self.__raw_value_word = int.from_bytes(self.__connection.mb_read(
@@ -147,6 +155,10 @@ class S7Connection:
                 1 = Return word binary representation (consider as string)
                 2 = Return word decimal representation (consider as int)
                 3 = Return char representation (consider string)
+
+                @md - memory dword number
+                @bit - bit number to read (consider 0-based)
+                @type - type of return value (consider 1-based)
         '''
         self.__DWORD_LEN = 32
         self.__raw_value_word = int.from_bytes(self.__connection.mb_read(
@@ -183,13 +195,47 @@ class S7Connection:
 
         return self.__dword
 
-    def db_read_string(self, db_number, start_pos=0, qty_bytes=1):
+    def db_read(self, db_number, start_pos=0, qty_bytes=1, qty_bits=8, bit=0, type=0):
         '''
             Perform return getter from MB. The value returned is a prashe
         '''
-        self.__raw_value_string = str(self.__connection.db_read(db_number, start_pos, qty_bytes))
-        self.__ignored_chars = 12
+        '''
+                   Perform return getter from DB. The value returned depends of type
+                you entered.
+                0 = Return bit from db representation (consider as string)
+                1 = Return word binary representation (consider as string)
+                2 = Return word decimal representation (consider as int)
+                3 = Return char representation (consider string)
+                
+                @db_number - database number
+                @start_pos - start position in bytes
+                @qty_bytes - quantity of bytes to read
+                @qty_bits - quantity of bits in each byte
+                @bit - bit number to read (consider 0-based)
+                @type - type of return value (consider 0-based)
+        '''
 
-        self.__string = self.__raw_value_string[self.__ignored_chars:self.__ignored_chars+qty_bytes]
+        self.__raw_value = int.from_bytes(self.__connection.db_read(
+            db_number, start_pos, qty_bytes), signed=True)
+        self.__binary = self.__convert_bin(
+            raw_value=self.__raw_value, length=qty_bits)
 
-        return self.__string
+        if type == 0:
+            self.__binary = self.__binary[2:]
+            self.__binary = self.__binary[qty_bits - 1 - bit]
+            self.__db_value = self.__binary
+
+        if type == 1:
+            self.__db_value = self.__binary
+
+        if type == 2:
+            self.__db_value = self.__raw_value
+
+        if type == 3:
+            self.__raw_value_string = str(
+                self.__connection.db_read(db_number, start_pos, qty_bytes))
+            self.__ignored_chars = 12
+
+            self.__db_value = self.__raw_value_string[self.__ignored_chars:self.__ignored_chars+qty_bytes]
+
+        return self.__db_value

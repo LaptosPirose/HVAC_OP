@@ -14,19 +14,19 @@ def main(args):
     MEB_inputs = S7GetInput(PLC=MEB)
     # MEB_inputs.getinput()
 
-    while True:
-        # Read data from MEB
-        date_now = str(datetime.now())
-        data_pla = MEB.db_read_string(db_number=230, start_pos=8, qty_bytes=3)
-        data_vis = MEB.db_read_string(db_number=230, start_pos=72, qty_bytes=8)
-        data_badge = MEB.db_read_string(db_number=230, start_pos=40, qty_bytes=10)
-        data_balancele = MEB.mb_read(mb=6401,type=2)# mb-5000
-    
-        print(date_now, ' PLA >>> ', data_pla, ' VIS >>> ', data_vis,
-            'Balancele >>> ', data_balancele, ' Badge >>> ', data_badge)
+    date_now = str(datetime.now())
+    data_pla = MEB.db_read(db_number=230, start_pos=8,
+                           qty_bytes=3, qty_bits=24, bit=0, type=3)
+    data_vis = MEB.db_read(db_number=230, start_pos=72,
+                           qty_bytes=8, qty_bits=64, bit=0, type=3)
+    data_badge = MEB.db_read(db_number=230, start_pos=41,
+                             qty_bytes=8, qty_bits=64, bit=0, type=3)
+    data_balancele = MEB.db_read(
+        db_number=6401, start_pos=10, qty_bytes=2, qty_bits=32, bit=0, type=2)-5000
 
-        # print(date_now, data_vis)
-        # print(date_now, data_pla)
+    print(date_now, ' PLA >>> ', data_pla, ' VIS >>> ', data_vis,
+          'Balancele >>> ', data_balancele, ' Badge >>> ', data_badge)
+
 
 if __name__ == '__main__':
     main('init')
