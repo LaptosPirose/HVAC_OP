@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QFrame
 from PyQt6.QtGui import QIcon, QFont
+from PyQt6.QtCore import QSize
 import sys
 
 
@@ -10,12 +11,12 @@ class MainWindow(QMainWindow):
         self.setGeometry(300, 300, 1200, 600)
         self.setWindowIcon(QIcon('PyQt6/images/5968350.png'))
 
-
         self.frame_direita = Frame_direito()
         self.setCentralWidget(self.frame_direita)
 
         self.frame_central = Frame()
         self.setCentralWidget(self.frame_central)
+
 
 class Frame(QWidget):
     def __init__(self):
