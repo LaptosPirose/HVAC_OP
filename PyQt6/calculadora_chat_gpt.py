@@ -28,6 +28,7 @@ class Calculadora(QWidget):
         ]
 
         positions = [(i, j) for i in range(1, 6) for j in range(4)]
+        print(positions)
 
         for position, button_text in zip(positions, buttons):
             if button_text == '':
