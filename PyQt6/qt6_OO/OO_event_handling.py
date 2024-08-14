@@ -19,16 +19,17 @@ class Widget(QWidget):
 
         self.setWindowIcon(QIcon(path + '5968350.png'))
 
-        qlabel = QLabel(self)
-        qlabel.setText(f"Path added to project: {path}")
-        qlabel.setFont(QFont('Times New Roman', 18))
-        qlabel.setStyleSheet("color: red")
+        # qlabel = QLabel(self)
+        # qlabel.setText(f"Path added to project: {path}")
+        # qlabel.setFont(QFont('Times New Roman', 18))
+        # qlabel.setStyleSheet("color: red")
 
         self.create_widget()
 
     def create_widget(self):
         hbox = QHBoxLayout()
         btn1 = QPushButton('click Me To change Text')
+        btn1.clicked.connect(self.clicked_event)
         self.label1 = QLabel("Default Text")
 
         hbox.addWidget(btn1)
@@ -37,6 +38,7 @@ class Widget(QWidget):
 
     def clicked_event(self):
         self.label1.setText('Button Clicked!')
+        self.label1.setFont(QFont('Sans-serif', 20, QFont.Weight.ExtraBold))
 
 
 app = QApplication(sys.argv)
