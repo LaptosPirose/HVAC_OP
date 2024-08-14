@@ -3,6 +3,8 @@ from PyQt6.QtGui import QIcon, QFont, QMovie, QPixmap
 
 import sys
 import os
+from datetime import datetime
+
 
 current_path = os.getcwd()
 path = os.path.join(current_path, 'PyQt6/images/')
@@ -20,7 +22,8 @@ class Widget(QWidget):
         self.setWindowIcon(QIcon(path + 'icon.png'))
 
         qlabel = QLabel(self)
-        qlabel.setText(f"Path added to project: {path}")
+        # qlabel.setText(f"Path added to project: {path}")
+        qlabel.setText(f"Time: {datetime.now()}")
         qlabel.setFont(QFont('Times New Roman', 18))
         qlabel.setStyleSheet("color: red")
 
