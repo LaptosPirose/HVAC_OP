@@ -1,5 +1,6 @@
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel
-from PyQt6.QtGui import QIcon, QFont, QMovie, QPixmap
+from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QPushButton, QLabel, QMenu
+from PyQt6.QtGui import QIcon, QFont
+from PyQt6.QtCore import QSize
 
 import sys
 import os
@@ -17,32 +18,41 @@ class Widget(QWidget):
         self.setWindowTitle("Python GUI Development - QPushButton")
         self.setGeometry(100, 100, 1200, 700)
 
-        self.setWindowIcon(QIcon(path + 'icon.png'))
+        self.setWindowIcon(QIcon(path + '5968350.png'))
 
         qlabel = QLabel(self)
         qlabel.setText(f"Path added to project: {path}")
+        qlabel.setFont(QFont('Times New Roman', 14))
         qlabel.setStyleSheet("color: red")
 
-        qlabel1 = QLabel(self)
-        qlabel1.setNum(1866)
-        qlabel1.move(0, 22)
-        # Apaga o conteúdo da Label
-        qlabel1.clear()
+        # Populate screens with button
+        self.create_buttons()
 
-        pixmap = QPixmap(path + '5968350.png')
-        qlabel_pixmap = QLabel(self)
-        qlabel_pixmap.setPixmap(pixmap)
-        qlabel_pixmap.move(0, 44)
+    def create_buttons(self):
+        btn1 = QPushButton("Click Me", self)
+        btn1.move(10, 40)
 
-        # Insert Movie
-        # movie = QMovie(path+'mario.gif')
+        btn2 = QPushButton(self)
+        btn2.setText("Another Button")
+        btn2.move(10, 80)
+        btn2.setGeometry(10, 80, 400, 80)
+        btn2.setFont(QFont('Sans-serif', 18, QFont.Weight.Bold))
+        # btn2.setStyleSheet("background-color: lightgreen; color: white")
+        # Set Icon
+        btn2.setIcon(QIcon(path+'icon.png'))
+        # Set Icon Size
+        btn2.setIconSize(QSize(50, 50))
 
-        # qlabel_movie = QLabel(self)
-        # qlabel_movie.setMovie(movie)
-        # qlabel_movie.move(0, 44)
+        menu = QMenu()
+        menu.addAction("File")
+        menu.addAction("Add")
+        menu.addAction("Copy")
+        menu.addAction("Cut")
+        menu.addAction("Paste")
+        menu.setFont(QFont('Arial',22))
+        menu.setStyleSheet("background-color:lightgray")
 
-        # movie.setSpeed(200)
-        # movie.start()
+        btn2.setMenu(menu)
 
 
 app = QApplication(sys.argv)
