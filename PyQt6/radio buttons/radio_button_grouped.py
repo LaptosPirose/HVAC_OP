@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(355, 446)
+        Dialog.resize(600, 446)
         self.label = QtWidgets.QLabel(parent=Dialog)
         self.label.setGeometry(QtCore.QRect(11, 11, 148, 21))
         font = QtGui.QFont()
@@ -28,7 +28,7 @@ class Ui_Dialog(object):
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.label_3 = QtWidgets.QLabel(parent=Dialog)
-        self.label_3.setGeometry(QtCore.QRect(10, 380, 66, 18))
+        self.label_3.setGeometry(QtCore.QRect(10, 360, 500, 18))
         self.label_3.setObjectName("label_3")
         self.widget = QtWidgets.QWidget(parent=Dialog)
         self.widget.setGeometry(QtCore.QRect(10, 240, 104, 86))
@@ -36,51 +36,80 @@ class Ui_Dialog(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        
+
         self.radioButton_5 = QtWidgets.QRadioButton(parent=self.widget)
         self.radioButton_5.setObjectName("radioButton_5")
+        self.radioButton_5.clicked.connect(self.radio_selected)
         self.verticalLayout.addWidget(self.radioButton_5)
-        
+
         self.radioButton_6 = QtWidgets.QRadioButton(parent=self.widget)
         self.radioButton_6.setObjectName("radioButton_6")
+        self.radioButton_6.clicked.connect(self.radio_selected)
         self.verticalLayout.addWidget(self.radioButton_6)
-        
+
         self.radioButton_7 = QtWidgets.QRadioButton(parent=self.widget)
         self.radioButton_7.setObjectName("radioButton_7")
+        self.radioButton_7.clicked.connect(self.radio_selected)
         self.verticalLayout.addWidget(self.radioButton_7)
-        
+
         self.widget1 = QtWidgets.QWidget(parent=Dialog)
         self.widget1.setGeometry(QtCore.QRect(11, 38, 96, 116))
         self.widget1.setObjectName("widget1")
-        
+
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.widget1)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        
+
         self.radioButton = QtWidgets.QRadioButton(parent=self.widget1)
         self.radioButton.setObjectName("radioButton")
+        self.radioButton.clicked.connect(self.radio_selected)
         self.verticalLayout_2.addWidget(self.radioButton)
-        
+
         self.radioButton_2 = QtWidgets.QRadioButton(parent=self.widget1)
         self.radioButton_2.setObjectName("radioButton_2")
+        self.radioButton_2.clicked.connect(self.radio_selected)
         self.verticalLayout_2.addWidget(self.radioButton_2)
-        
+
         self.radioButton_3 = QtWidgets.QRadioButton(parent=self.widget1)
         self.radioButton_3.setObjectName("radioButton_3")
+        self.radioButton_3.clicked.connect(self.radio_selected)
+
         self.verticalLayout_2.addWidget(self.radioButton_3)
         self.radioButton_4 = QtWidgets.QRadioButton(parent=self.widget1)
         self.radioButton_4.setObjectName("radioButton_4")
+        self.radioButton_4.clicked.connect(self.radio_selected)
         self.verticalLayout_2.addWidget(self.radioButton_4)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def radio_seleected(self):
+    def radio_selected(self):
         selected1 = ""
         selected2 = ""
 
         if self.radioButton.isChecked():
             selected1 = self.radioButton.text()
+
+        if self.radioButton_2.isChecked():
+            selected1 = self.radioButton_2.text()
+
+        if self.radioButton_3.isChecked():
+            selected1 = self.radioButton_3.text()
+
+        if self.radioButton_4.isChecked():
+            selected1 = self.radioButton_4.text()
+
+        if self.radioButton_5.isChecked():
+            selected2 = self.radioButton_5.text()
+
+        if self.radioButton_6.isChecked():
+            selected2 = self.radioButton_6.text()
+
+        if self.radioButton_7.isChecked():
+            selected2 = self.radioButton_7.text()
+
+        self.label_3.setText(f"The selection was: {
+                             selected1} and thepayment was: {selected2}.")
 
         print(selected1, selected2)
 
@@ -97,7 +126,8 @@ class Ui_Dialog(object):
         self.radioButton_2.setText(_translate("Dialog", "Java"))
         self.radioButton_3.setText(_translate("Dialog", "JavaScript"))
         self.radioButton_4.setText(_translate("Dialog", "C++"))
-        
+
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
