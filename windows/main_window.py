@@ -28,8 +28,12 @@ class MainWindow(QMainWindow):
         # Set the font size for the window
         self.setFont(QFont("Arial", 24))
 
-        qlabel = QLabel(self)
-        # qlabel.setText(f"Path added to project: {path}")
-        qlabel.setText(f"Time")
-        qlabel.setFont(QFont('Times New Roman', 18))
-        qlabel.setStyleSheet("color: red")
+        self.text = "OP__HVAC OP__X!!"
+
+        self.qlabel = QLabel(self)
+        self.qlabel.setFixedSize(200, 22)  # width: 200, height: 100
+        self.qlabel.setText(f"Posto: {self.text}")
+        # self.qlabel.move(self.screen_width // 2 - 150,
+        # self.screen_height // 2 - 50)
+        self.qlabel.setFont(QFont('Arial', 10))
+        self.qlabel.setStyleSheet("color: blue")
