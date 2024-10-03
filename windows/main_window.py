@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import datetime
 
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QDialog
 from PyQt6.QtWidgets import QMenu, QMessageBox, QPushButton, QVBoxLayout, QHBoxLayout
@@ -45,7 +46,7 @@ class MainWindow(QMainWindow):
 
         # Generate menu
         self.menu_bar = self.menuBar()
-        self.file_menu = self.menu_bar.addMenu("File")
+        self.file_menu = self.menu_bar.addMenu("Configurações")
 
         # Add an action to open the secondary dialog
         self.open_dialog_action = QAction("Configure PLC IP", self)
@@ -60,12 +61,21 @@ class MainWindow(QMainWindow):
 
         self.text = "OP__HVAC OP__X!!"
 
-        self.qlabel = QLabel(self)
-        self.qlabel.setFixedSize(200, 22)  # width: 200, height: 22
-        self.qlabel.move(5, 20)
-        self.qlabel.setText(f"Posto: {self.text}")
-        self.qlabel.setFont(QFont('Arial', 10))
-        self.qlabel.setStyleSheet("color: blue")
+        self.label_posto = QLabel(self)
+        self.label_posto.setFixedSize(200, 22)  # width: 200, height: 22
+        self.label_posto.move(5, 20)
+        self.label_posto.setText(f"Posto: {self.text}")
+        self.label_posto.setFont(QFont('Arial', 10))
+        self.label_posto.setStyleSheet("color: blue")
+
+        self.datetime_text = datetime.datetime.now()
+
+        self.label_datetime = QLabel(self)
+        self.label_datetime.setFixedSize(200, 22)  # width: 200, height: 22
+        self.label_datetime.move(5, 40)
+        self.label_datetime.setText(f"Data e Hora: {self.datetime_text}")
+        self.label_datetime.setFont(QFont('Arial', 10))
+        self.label_datetime.setStyleSheet("color: blue")
 
         # Set up the QLabel to display images
 
@@ -85,7 +95,8 @@ class MainWindow(QMainWindow):
         # Configurar o QTimer para alternar as imagens a cada 1 segundo
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.change_image)
-        # A cada 1000 ms (1 segundo), a função `change_image` será chamada
+        self.timer.timeout.connect(self.update_time)
+        # A cada 1000 ms (1 segundo), a função `change_image` e `update_time` serão chamadas
         self.timer.start(1000)
 
     def open_configura_ip(self):
@@ -114,3 +125,7 @@ class MainWindow(QMainWindow):
             self.current_image_index + 1) % len(self.images)
         print(self.current_image_index)
         self.update_image()
+
+    def update_time(self):
+        self.datetime_text = datetime.datetime.now()
+        self.label_datetime.setText(f"Data e Hora: {self.datetime_text}")
