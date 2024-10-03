@@ -1,6 +1,7 @@
 import os
 import sys
 import random
+import time
 
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QDialog
 from PyQt6.QtWidgets import QMenu, QMessageBox, QPushButton, QVBoxLayout, QHBoxLayout
@@ -66,6 +67,7 @@ class MainWindow(QMainWindow):
         self.qlabel.setStyleSheet("color: blue")
 
         # Set up the QLabel to display images
+
         self.label_panel = QLabel(self)
         # Set initial image
         self.label_panel.setPixmap(QPixmap(image_path + "icon.png"))
@@ -105,8 +107,7 @@ class MainWindow(QMainWindow):
 
     def change_image(self):
         # Pick a random image from the list
-        # new_image = random.choice(self.images)
-        new_image = next(self.iterator)
+        new_image = random.choice(self.images)
 
         # Update the QLabel with the new image
         self.label_panel.setPixmap(QPixmap(new_image))
