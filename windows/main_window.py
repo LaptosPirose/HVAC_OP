@@ -1,12 +1,13 @@
 import os
 import sys
-import random
 import time
 
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QDialog
 from PyQt6.QtWidgets import QMenu, QMessageBox, QPushButton, QVBoxLayout, QHBoxLayout
 from PyQt6.QtGui import QScreen, QFont, QIcon, QAction, QPixmap
 from PyQt6.QtCore import QTimer
+
+from windows.secondary_window import SecondaryDialog
 
 
 class MainWindow(QMainWindow):
@@ -69,8 +70,6 @@ class MainWindow(QMainWindow):
         # Set up the QLabel to display images
 
         self.label_panel = QLabel(self)
-        # Set initial image
-        self.label_panel.setPixmap(QPixmap(image_path + "icon.png"))
         # Scale image to fit the label size
         self.label_panel.setScaledContents(True)
         # Move panel to center
@@ -81,15 +80,13 @@ class MainWindow(QMainWindow):
         # Image paths (change this to your actual images)
         self.images = [image_path+"mario.gif",
                        image_path+"icon.png", image_path+"python.png"]
+        self.current_image_index = 0  # Índice da imagem atual
 
-        self.iterator = iter(self.images)
-
-        # Set up the QTimer to update the image every second (1000 ms)
+        # Configurar o QTimer para alternar as imagens a cada 1 segundo
         self.timer = QTimer(self)
-
         self.timer.timeout.connect(self.change_image)
-
-        self.timer.start(500)
+        # A cada 1000 ms (1 segundo), a função `change_image` será chamada
+        self.timer.start(1000)
 
     def open_configura_ip(self):
         secondary_dialog = SecondaryDialog(
@@ -105,45 +102,15 @@ class MainWindow(QMainWindow):
         print(
             f"Largura da tela -> {self.screen_width} Altura -> {self.screen_height}")
 
+    def update_image(self):
+        """Atualiza a imagem exibida no QLabel"""
+        pixmap = QPixmap(self.images[self.current_image_index])
+        self.label_panel.setPixmap(pixmap)
+
     def change_image(self):
-        # Pick a random image from the list
-        new_image = random.choice(self.images)
-
-        # Update the QLabel with the new image
-        self.label_panel.setPixmap(QPixmap(new_image))
-
-
-class SecondaryDialog(QDialog):
-    def __init__(self, width, height, text_title, text_label):
-        super().__init__()
-
-        # Set dialog properties
-        self.text_title = text_title
-        self.text_label = text_label
-
-        self.box_x = 100
-        self.box_y = 100
-        self.box_width = int(width / 2) - 400
-        self.box_height = int(height / 2) - 400
-
-        self.setWindowTitle(f"{self.text_title}")
-        self.setGeometry(10, 10, self.box_width, self.box_height)
-
-        # Create a label and a close button
-        label = QLabel(
-            f"{text_label}", self)
-        label.setFixedWidth(self.box_width-50)
-        # self.setStyleSheet(
-        # "QPushButton{background-color : green} QLabel{background-color : yellow} QDialog{background-color : lightgray}")
-
-        label.move(self.box_x - 50, self.box_y-100)
-
-        close_button = QPushButton("Close", self)
-        close_button.clicked.connect(self.close)
-        ok_button = QPushButton("Ok", self)
-
-        layout = QHBoxLayout()
-        # layout.addWidget(label)
-        layout.addWidget(close_button)
-        layout.addWidget(ok_button)
-        self.setLayout(layout)
+        """Altera a imagem de forma sequencial"""
+        # Avançar para a próxima imagem
+        self.current_image_index = (
+            self.current_image_index + 1) % len(self.images)
+        print(self.current_image_index)
+        self.update_image()
