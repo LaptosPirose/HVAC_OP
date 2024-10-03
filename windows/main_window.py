@@ -1,8 +1,11 @@
 import os
 import sys
+import random
+
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QDialog
 from PyQt6.QtWidgets import QMenu, QMessageBox, QPushButton, QVBoxLayout, QHBoxLayout
-from PyQt6.QtGui import QScreen, QFont, QIcon, QAction
+from PyQt6.QtGui import QScreen, QFont, QIcon, QAction, QPixmap
+from PyQt6.QtCore import QTimer
 
 
 class MainWindow(QMainWindow):
@@ -62,6 +65,30 @@ class MainWindow(QMainWindow):
         self.qlabel.setFont(QFont('Arial', 10))
         self.qlabel.setStyleSheet("color: blue")
 
+        # Set up the QLabel to display images
+        self.label_panel = QLabel(self)
+        # Set initial image
+        self.label_panel.setPixmap(QPixmap(image_path + "icon.png"))
+        # Scale image to fit the label size
+        self.label_panel.setScaledContents(True)
+        # Move panel to center
+        self.label_panel.move(80, 80)
+        # Set panel size
+        self.label_panel.setFixedSize(1000, 800)  # width: 100, height: 100
+
+        # Image paths (change this to your actual images)
+        self.images = [image_path+"mario.gif",
+                       image_path+"icon.png", image_path+"python.png"]
+
+        self.iterator = iter(self.images)
+
+        # Set up the QTimer to update the image every second (1000 ms)
+        self.timer = QTimer(self)
+
+        self.timer.timeout.connect(self.change_image)
+
+        self.timer.start(500)
+
     def open_configura_ip(self):
         secondary_dialog = SecondaryDialog(
             self.screen_width, self.screen_height, "Configurações", "Configura IP do PLC com o qual aaplicação vai comunicar.")
@@ -75,6 +102,14 @@ class MainWindow(QMainWindow):
         secondary_dialog.exec()
         print(
             f"Largura da tela -> {self.screen_width} Altura -> {self.screen_height}")
+
+    def change_image(self):
+        # Pick a random image from the list
+        # new_image = random.choice(self.images)
+        new_image = next(self.iterator)
+
+        # Update the QLabel with the new image
+        self.label_panel.setPixmap(QPixmap(new_image))
 
 
 class SecondaryDialog(QDialog):
