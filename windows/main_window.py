@@ -1,48 +1,8 @@
 import os
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QDialog
-from PyQt6.QtWidgets import QMenu, QMessageBox, QPushButton, QVBoxLayout
+from PyQt6.QtWidgets import QMenu, QMessageBox, QPushButton, QVBoxLayout, QHBoxLayout
 from PyQt6.QtGui import QScreen, QFont, QIcon, QAction
-
-
-class SecondaryDialog(QDialog):
-    def __init__(self):
-        super().__init__()
-
-        # Set dialog properties
-        self.setWindowTitle("Secondary Screen")
-        # self.setGeometry(self.screen_width / 2 - 150,
-        #                  self.screen_height / 2 - 100, 300, 200)
-        self.setGeometry(400, 400, 300, 200)
-
-        # Create a label and a close button
-        label = QLabel("This is a secondary screen (QDialog)", self)
-        close_button = QPushButton("Close", self)
-        close_button.clicked.connect(self.close)
-
-        layout = QVBoxLayout()
-        layout.addWidget(label)
-        layout.addWidget(close_button)
-        self.setLayout(layout)
-
-
-class SecondaryDialog1(QDialog):
-    def __init__(self):
-        super().__init__()
-
-        # Set dialog properties
-        self.setWindowTitle("Secondary Screen")
-        self.setGeometry(400, 400, 300, 200)
-
-        # Create a label and a close button
-        layout = QVBoxLayout()
-        label = QLabel("This is a secondary screen (QDialog)", self)
-        close_button = QPushButton("Close", self)
-        close_button.clicked.connect(self.close)
-
-        layout.addWidget(label)
-        layout.addWidget(close_button)
-        self.setLayout(layout)
 
 
 class MainWindow(QMainWindow):
@@ -83,13 +43,14 @@ class MainWindow(QMainWindow):
         self.file_menu = self.menu_bar.addMenu("File")
 
         # Add an action to open the secondary dialog
-        self.open_dialog_action = QAction("Open Secondary Screen", self)
-        self.open_dialog_action.triggered.connect(self.open_secondary_screen)
+        self.open_dialog_action = QAction("Configure PLC IP", self)
+        self.open_dialog_action.triggered.connect(
+            self.open_configura_ip)
         self.file_menu.addAction(self.open_dialog_action)
 
         # Add an action to open the secondary dialog
-        self.open_dialog_action1 = QAction("Open Secondary Screen 1", self)
-        self.open_dialog_action1.triggered.connect(self.open_dialog)
+        self.open_dialog_action1 = QAction("Configure Número do Posto", self)
+        self.open_dialog_action1.triggered.connect(self.open_configura_posto)
         self.file_menu.addAction(self.open_dialog_action1)
 
         self.text = "OP__HVAC OP__X!!"
@@ -101,11 +62,52 @@ class MainWindow(QMainWindow):
         self.qlabel.setFont(QFont('Arial', 10))
         self.qlabel.setStyleSheet("color: blue")
 
-    def open_secondary_screen(self):
-        secondary_dialog = SecondaryDialog()
+    def open_configura_ip(self):
+        secondary_dialog = SecondaryDialog(
+            self.screen_width, self.screen_height, "Configurações", "Configura IP do PLC com o qual aaplicação vai comunicar.")
         secondary_dialog.exec()
+        print(
+            f"Largura da tela -> {self.screen_width} Altura -> {self.screen_height}")
 
-    def open_dialog(self):
-        # Instantiate and show the dialog
-        dialog = SecondaryDialog1()
-        dialog.exec()  # Modal dialog (blocks interaction with main window until closed)
+    def open_configura_posto(self):
+        secondary_dialog = SecondaryDialog(
+            self.screen_width, self.screen_height, "Configurações", "Configura número do posto.")
+        secondary_dialog.exec()
+        print(
+            f"Largura da tela -> {self.screen_width} Altura -> {self.screen_height}")
+
+
+class SecondaryDialog(QDialog):
+    def __init__(self, width, height, text_title, text_label):
+        super().__init__()
+
+        # Set dialog properties
+        self.text_title = text_title
+        self.text_label = text_label
+
+        self.box_x = 100
+        self.box_y = 100
+        self.box_width = int(width / 2) - 400
+        self.box_height = int(height / 2) - 400
+
+        self.setWindowTitle(f"{self.text_title}")
+        self.setGeometry(10, 10, self.box_width, self.box_height)
+
+        # Create a label and a close button
+        label = QLabel(
+            f"{text_label}", self)
+        label.setFixedWidth(self.box_width-50)
+        # self.setStyleSheet(
+        # "QPushButton{background-color : green} QLabel{background-color : yellow} QDialog{background-color : lightgray}")
+
+        label.move(self.box_x - 50, self.box_y-100)
+
+        close_button = QPushButton("Close", self)
+        close_button.clicked.connect(self.close)
+        ok_button = QPushButton("Ok", self)
+
+        layout = QHBoxLayout()
+        # layout.addWidget(label)
+        layout.addWidget(close_button)
+        layout.addWidget(ok_button)
+        self.setLayout(layout)
