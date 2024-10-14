@@ -131,7 +131,7 @@ class MainWindow(QMainWindow):
         # Avançar para a próxima imagem
         self.current_image_index = (
             self.current_image_index + 1) % len(self.images)
-        print(self.current_image_index)
+        # print(self.current_image_index)
         self.update_image()
 
     def update_time(self):
