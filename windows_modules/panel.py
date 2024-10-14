@@ -15,7 +15,7 @@ class ImagePanel(QWidget):
         print(current_path)
 
         # Path to images
-        image_path = os.path.join(current_path, 'windows/images/')
+        image_path = os.path.join(current_path, 'windows_modules/images/')
 
         # Set up the QLabel to display images
         self.label = QLabel(self)
@@ -31,7 +31,7 @@ class ImagePanel(QWidget):
         # Set up the QTimer to update the image every second (1000 ms)
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.change_image)
-        self.timer.start(1000)
+        self.timer.start(2000)
 
         # Image paths (change this to your actual images)
         self.images = [image_path+"mario.gif",

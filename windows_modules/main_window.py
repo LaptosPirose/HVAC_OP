@@ -1,9 +1,8 @@
+from windows_modules.secondary_window import SecondaryDialog
 import os
 import sys
 import time
 import datetime
-
-from windows_modules.secondary_window import SecondaryDialog
 
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QDialog
 from PyQt6.QtWidgets import QMenu, QMessageBox, QPushButton, QVBoxLayout, QHBoxLayout
@@ -15,12 +14,15 @@ class MainWindow(QMainWindow):
     def __init__(self, app):
         super().__init__()
 
+        update_time_rate = 1000
+        images_update_rate = 3000
+
         # Get path to turn shorter paths
         current_path = os.getcwd()
         print(current_path)
 
         # Path to images
-        image_path = os.path.join(current_path, 'windows/images/')
+        image_path = os.path.join(current_path, 'windows_modules/images/')
         print(image_path)
 
         # Get the screen object
@@ -86,6 +88,9 @@ class MainWindow(QMainWindow):
         self.label_panel.move(80, 80)
         # Set panel size
         self.label_panel.setFixedSize(1000, 800)  # width: 100, height: 100
+        # Define first imagem to display
+        pixmap = QPixmap(image_path+"python.png")
+        self.label_panel.setPixmap(pixmap)
 
         # Image paths (change this to your actual images)
         self.images = [image_path+"mario.gif",
@@ -93,11 +98,14 @@ class MainWindow(QMainWindow):
         self.current_image_index = 0  # Índice da imagem atual
 
         # Configurar o QTimer para alternar as imagens a cada 1 segundo
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.change_image)
-        self.timer.timeout.connect(self.update_time)
+        self.timer_datetime = QTimer(self)
+        self.timer_datetime.timeout.connect(self.update_time)
         # A cada 1000 ms (1 segundo), a função `change_image` e `update_time` serão chamadas
-        self.timer.start(1000)
+        self.timer_datetime.start(update_time_rate)
+
+        self.timer_update_images = QTimer(self)
+        self.timer_update_images.timeout.connect(self.change_image)
+        self.timer_update_images.start(images_update_rate)
 
     def open_configura_ip(self):
         secondary_dialog = SecondaryDialog(
