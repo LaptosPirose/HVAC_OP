@@ -4,7 +4,8 @@ import usb.util
 # Find the USB device (replace with your barcode reader's VID and PID)
 # VID = 0xXXXX  # Vendor ID (e.g., 0x04b8)
 # PID = 0xYYYY  # Product ID (e.g., 0x0202)
-
+VID = 0
+PID = 0
 # Find the device
 dev = usb.core.find(idVendor=VID, idProduct=PID)
 
