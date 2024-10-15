@@ -6,5 +6,9 @@ devices = usb.core.find(find_all=True)
 
 # List detected devices
 for device in devices:
-    print(f"Device: ID Vendor  {device.idVendor:04x}: ID Product{
+    print(f"\nDevice: ID Vendor  {device.idVendor:04x}: ID Product{
           device.idProduct:04x}")
+    VID = device.idVendor  # Vendor ID do dispositivo
+    PID = device.idProduct  # Product ID do dispositivo
+    dev = usb.core.find(idVendor=VID, idProduct=PID)
+    print(dev)
