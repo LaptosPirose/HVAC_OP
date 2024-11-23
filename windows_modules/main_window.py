@@ -1,4 +1,5 @@
 from windows_modules.secondary_window import SecondaryDialog
+from windows_modules.set_main_window import SetMainWindow
 import os
 import sys
 import time
@@ -26,19 +27,21 @@ class MainWindow(QMainWindow):
         print(image_path)
 
         # Get the screen object
-        self.screen = app.primaryScreen()
+        # self.screen = app.primaryScreen()
 
-        # Get the screen geometry
-        self.screen_width = self.screen.size().width()
-        self.screen_height = self.screen.size().height()
+        SetMainWindow(self, app)
 
-        # Configuring screen
-        self.setGeometry(0, 0, self.screen_width, self.screen_height)
-        self.setWindowTitle("HVAC OP__X!")
-        print(f"Screen width: {
-              self.screen_width} - Screen height: {self.screen_height}")
+        # # Get the screen geometry
+        # self.screen_width = self.screen.size().width()
+        # self.screen_height = self.screen.size().height()
+
+        # # Configuring screen
+        # self.setGeometry(0, 0, self.screen_width, self.screen_height)
+        # self.setWindowTitle("HVAC OP__X!")
+        # print(f"Screen width: {
+        #       self.screen_width} - Screen height: {self.screen_height}")
         # Set the window title
-        self.setWindowTitle("HVAC OP__!")
+        # self.setWindowTitle("HVAC OP__!")
 
         # Set the window icon
         self.setWindowIcon(QIcon(image_path + "python.png"))
